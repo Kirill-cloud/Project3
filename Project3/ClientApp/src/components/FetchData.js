@@ -1,44 +1,48 @@
-    import React, { Component } from 'react';
-    import AddUser from './AddUser'
+import React, { Component } from 'react';
+import AddUser from './AddUser'
+import Counter from './Counter'
+
+const datesss = [1, 2, 3, 4, 5];
 
 export class FetchData extends Component {
-        static displayName = FetchData.name;
+    static displayName = FetchData.name;
 
-        constructor(props) {
-            super(props);
-            this.state = { forecasts: [], loading: true };
-        }
+    constructor(props) {
+        super(props);
+        this.state = { forecasts: [], loading: true, histo: [0,1] };
+    }
 
-        componentDidMount() {
-            this.populateWeatherData();
-        }
+    componentDidMount() {
+        this.populateWeatherData();
+        //this.onSubmit();
+    }
 
-        static renderForecastsTable(forecasts) {
+    static renderForecastsTable(forecasts) {
 
-            return (
-                <div>
+        return (
+            <div>
 
-                    <table className='table table-striped' aria-labelledby="tabelLabel">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Date1</th>
-                                <th>Date2</th>
+                <table className='table table-striped' aria-labelledby="tabelLabel">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date1</th>
+                            <th>Date2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {forecasts.map(forecast =>
+                            <tr key={forecast.id}>
+                                <td>{forecast.id}</td>
+                                <td>{forecast.date1}</td>
+                                <td>{forecast.date2}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {forecasts.map(forecast =>
-                                <tr key={forecast.id}>
-                                    <td>{forecast.id}</td>
-                                    <td>{forecast.date1}</td>
-                                    <td>{forecast.date2}</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            );
-        }
+                        )}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 
     render() {
         let contents = this.state.loading
@@ -54,15 +58,16 @@ export class FetchData extends Component {
                     <button type='submit' >Send</button>
                 </form>
                 {contents}
+                <Counter data={this.state.histo} />
             </div>
         );
     }
 
 
 
-    async onSubmitHandler(e){
+    async onSubmitHandler(e) {
         e.preventDefault();
-        
+
         const responce = await fetch('WeatherForecast',
             {
                 method: "POST",
@@ -71,8 +76,10 @@ export class FetchData extends Component {
                 },
                 body: JSON.stringify(this.state.forecasts)
             })
-        const data = await responce.json();
-        
+
+        const data = await responce.json(); //[1, 2, 3, 4, 5, 6, 7]  //
+        await setTimeout(() => { this.setState({ histo: data}); }, 30);
+
     };
 
     async populateWeatherData() {

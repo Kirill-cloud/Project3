@@ -1,63 +1,74 @@
 import React, { Component } from 'react';
-import SomeComp from './SomeComp.js';
-import Histogram from 'react-native-histogram';
+import {
+    Histogram,
+    DensitySeries,
+    BarSeries,
+    withParentSize,
+    XAxis,
+    YAxis
+} from "@data-ui/histogram";
+const ResponsiveHistogram = withParentSize(
+    ({ parentWidth, parentHeight, ...rest }) => (
+        <Histogram width={parentWidth} height={parentHeight} {...rest} />
+    )
+);
+const data1 = [1,2,3,4,5]
+function Counter({ data } ) {
 
-export class Counter extends Component {
-  static displayName = Counter.name;
-
-  constructor(props) {
-    super(props);
-    this.state = { currentCount: 0 };
-    this.incrementCounter = this.incrementCounter.bind(this);
-  }
-
-  incrementCounter() {
-    this.setState({
-      currentCount: this.state.currentCount + 1
-    });
-  }
-
-  render() {
     return (
-      <div>
-        <h1>Counter</h1>
-
-        <p>This is a simple example of a React component.</p>
-
-        <p aria-live="polite">Current count: <strong>{this.state.currentCount}</strong></p>
-
-            <button className="btn btn-primary" onClick={this.incrementCounter}>Increment</button>
-            <HistogramExample />
-      </div>
+        <div className="App" style={{ height: 300 }}>
+            <ResponsiveHistogram
+                ariaLabel="histogram"
+                orientation="vertical"
+                cumulative={false}
+                normalized={true}
+                binCount={25}
+                valueAccessor={(datum) => datum}
+                binType="numeric"
+                renderTooltip={({ event, datum, data, color }) => (
+                    <div>
+                        <strong style={{ color }}>
+                            {datum.bin0} to {datum.bin1}
+                        </strong>
+                        <div>
+                            <strong>count </strong>
+                            {datum.count}
+                        </div>
+                        <div>
+                            <strong>cumulative </strong>
+                            {datum.cumulative}
+                        </div>
+                        <div>
+                            <strong>density </strong>
+                            {datum.density}
+                        </div>
+                    </div>
+                )}
+            >
+                <BarSeries animated rawData={data} />
+                <XAxis />
+                <YAxis />
+            </ResponsiveHistogram>
+        </div>
     );
-  }
 }
 
-var HistogramExample = React.createClass({
-    getInitialState: function () {
-        return { data: [{}] }
-    },
-    componentWillMount: function () {
-        var row_datas = [];
-        for (var i = 0; i < 500; i++) {
-            row_datas[i] = Math.random() * 100;
-        }
-        this.setState({
-            data: [{ data: row_datas }]
-        })
-    },
-    render: function () {
-        return (
-            <View style={styles.container}>
-                <View>
-                    <Histogram
-                        data={this.state.data}
-                        height={200}
-                        width={300}
-                        split={20}
-                    />
-                </View>
-            </View>
-        );
-    }
-});
+export default Counter
+
+//export class Counter extends Component {
+//  static displayName = Counter.name;
+
+//  constructor(props) {
+//    super(props);
+
+//  }
+
+
+//  render() {
+//    return (
+//      <div>
+//            <App />
+//      </div>
+//    );
+//  }
+//}

@@ -40,9 +40,9 @@ namespace Project3.Controllers
             return x.ToArray();
         }
         [HttpPost] 
-        public List<DictinaryPair> Post([FromBody] PostData[] post) 
+        public List<int> Post([FromBody] PostData[] post) 
         {
-            List<DictinaryPair> daysBetween = new List<DictinaryPair>();
+            List<int> daysBetween = new List<int>();
             Dictionary<int, int> daysBetweenForGisto = new Dictionary<int, int>();
 
             foreach (var item in post)
@@ -50,21 +50,23 @@ namespace Project3.Controllers
                 var d1 = DateTime.ParseExact(item.date1, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                 var d2 = DateTime.ParseExact(item.date2, "dd.MM.yyyy", CultureInfo.InvariantCulture);
                 var between = d2 - d1;
-                if (daysBetweenForGisto.ContainsKey(between.Days))
-                {
-                    daysBetweenForGisto[between.Days]++;
-                }
-                else
-                {
-                    daysBetweenForGisto.Add(between.Days, 1);
-                }
+
+                daysBetween.Add(between.Days);
+                //if (daysBetweenForGisto.ContainsKey(between.Days))
+                //{
+                //    daysBetweenForGisto[between.Days]++;
+                //}
+                //else
+                //{
+                //    daysBetweenForGisto.Add(between.Days, 1);
+                //}
             }
             
-            foreach (var item in daysBetweenForGisto)
-            {
-                daysBetween.Add(new DictinaryPair() { id = item.Key, value = item.Value });
-            }
-            daysBetween = daysBetween.OrderBy(x => x.id).ToList<DictinaryPair>();
+            //foreach (var item in daysBetweenForGisto)
+            //{
+            //    daysBetween.Add(new DictinaryPair() { id = item.Key, value = item.Value });
+            //}
+            //daysBetween = daysBetween.OrderBy(x => x.id).ToList<DictinaryPair>();
             return daysBetween;
         }
 
