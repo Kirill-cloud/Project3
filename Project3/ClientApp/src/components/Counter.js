@@ -12,7 +12,6 @@ const ResponsiveHistogram = withParentSize(
         <Histogram width={parentWidth} height={parentHeight} {...rest} />
     )
 );
-const data1 = [1,2,3,4,5]
 function Counter({ data } ) {
 
     return (
@@ -54,21 +53,3 @@ function Counter({ data } ) {
 }
 
 export default Counter
-
-//export class Counter extends Component {
-//  static displayName = Counter.name;
-
-//  constructor(props) {
-//    super(props);
-
-//  }
-
-
-//  render() {
-//    return (
-//      <div>
-//            <App />
-//      </div>
-//    );
-//  }
-//}

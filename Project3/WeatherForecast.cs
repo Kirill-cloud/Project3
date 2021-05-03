@@ -2,7 +2,7 @@ using System;
 
 namespace Project3
 {
-    public class WeatherForecast
+    public class User
     {
         public int Id { get; set; }
 

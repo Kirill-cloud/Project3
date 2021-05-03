@@ -11,39 +11,32 @@ namespace Project3.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<User> Get()
         {
             var rng = new Random();
-             var x =Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var x = Enumerable.Range(1, 5).Select(index => new User
             {
                 Id = index,
-                Date1 = DateTime.Now.AddDays(index).Date.ToString().Substring(0,10),
-                Date2 = DateTime.Now.AddDays(2*index).Date.ToString().Substring(0, 10),
+                Date1 = String.Format("{0:dd.MM.yyyy}", DateTime.Now.AddDays(index)),
+                Date2 = String.Format("{0:dd.MM.yyyy}", DateTime.Now.AddDays(2 * index)),
             })
             .ToList();
             return x.ToArray();
         }
-        [HttpPost] 
-        public List<int> Post([FromBody] PostData[] post) 
+        [HttpPut]
+        public ActionResult Save([FromBody] User[] usersToSave)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        public PostResponce Calculate([FromBody] PostData[] post)
         {
             List<int> daysBetween = new List<int>();
-            Dictionary<int, int> daysBetweenForGisto = new Dictionary<int, int>();
 
             foreach (var item in post)
             {
@@ -52,34 +45,29 @@ namespace Project3.Controllers
                 var between = d2 - d1;
 
                 daysBetween.Add(between.Days);
-                //if (daysBetweenForGisto.ContainsKey(between.Days))
-                //{
-                //    daysBetweenForGisto[between.Days]++;
-                //}
-                //else
-                //{
-                //    daysBetweenForGisto.Add(between.Days, 1);
-                //}
             }
-            
-            //foreach (var item in daysBetweenForGisto)
-            //{
-            //    daysBetween.Add(new DictinaryPair() { id = item.Key, value = item.Value });
-            //}
-            //daysBetween = daysBetween.OrderBy(x => x.id).ToList<DictinaryPair>();
-            return daysBetween;
+            DateTime sevenDay = DateTime.Now.AddDays(-7);
+
+            IEnumerable<PostData> oldUsers = post.Where<PostData>(x => DateTime.ParseExact(x.date1, "dd.MM.yyyy", CultureInfo.InvariantCulture) <= sevenDay);
+
+            double firstParam = oldUsers.Count<PostData>(x => DateTime.ParseExact(x.date2, "dd.MM.yyyy", CultureInfo.InvariantCulture) >= sevenDay);
+
+            double secondParam = oldUsers.Count();
+
+
+            return new PostResponce() { UsersLifeTime = daysBetween, RR7days = String.Format("{0:P}", firstParam / secondParam) };
         }
 
-        public class DictinaryPair
+        public class PostResponce
         {
-            public int id { get; set; }
-            public int value { get; set; }
+            public List<int> UsersLifeTime { get; set; }
+            public string RR7days { get; set; }
         }
 
-        public class PostData 
+        public class PostData
         {
-            public string date1{ get; set; }
-            public string date2{ get; set; }
+            public string date1 { get; set; }
+            public string date2 { get; set; }
         }
     }
 }

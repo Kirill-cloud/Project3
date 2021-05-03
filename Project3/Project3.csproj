@@ -16,9 +16,21 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\components\Modal\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\components\Modal\**" />
+    <EmbeddedResource Remove="ClientApp\src\components\Modal\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\components\Modal\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\components\Modal\Modal.css" />
+    <None Remove="ClientApp\src\components\Modal\Modal.js" />
+    <None Remove="ClientApp\src\components\NewWorld.js" />
+    <None Remove="ClientApp\src\components\SomeComp.js" />
+    <None Remove="ClientApp\src\components\UserRow.js" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
