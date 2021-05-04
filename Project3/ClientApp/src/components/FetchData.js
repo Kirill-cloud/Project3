@@ -10,14 +10,14 @@ export class FetchData extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { forecasts: [], histo: [0, 1], retantion: '', loading: true, showHisto: false };
+        this.state = { usersLists: [], histo: [0, 1], retantion: '', loading: true, showHisto: false };
     }
 
     componentDidMount() {
         this.defaultUsers();
     }
 
-    static renderForecastsTable(forecasts) {
+    static renderusersListsTable(usersLists) {
 
         return (
             <div>
@@ -31,11 +31,11 @@ export class FetchData extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {forecasts.map(forecast =>
-                            <tr key={forecast.id}>
-                                <td>{forecast.id}</td>
-                                <td>{forecast.date1}</td>
-                                <td>{forecast.date2}</td>
+                        {usersLists.map(usersList =>
+                            <tr key={usersList.id}>
+                                <td>{usersList.id}</td>
+                                <td>{usersList.date1}</td>
+                                <td>{usersList.date2}</td>
                             </tr>
                         )}
                     </tbody>
@@ -47,7 +47,7 @@ export class FetchData extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : FetchData.renderForecastsTable(this.state.forecasts);
+            : FetchData.renderusersListsTable(this.state.usersLists);
 
         let contents2 = !this.state.showHisto
             ? <p><em>Loading...</em></p>
@@ -77,7 +77,7 @@ export class FetchData extends Component {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(this.state.forecasts)
+                body: JSON.stringify(this.state.usersLists)
             })
     };
 
@@ -90,7 +90,7 @@ export class FetchData extends Component {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(this.state.forecasts)
+                body: JSON.stringify(this.state.usersLists)
             })
 
         const data = await responce.json();
@@ -101,15 +101,15 @@ export class FetchData extends Component {
     async defaultUsers() {
         const response = await fetch('Users');
         const data = await response.json();
-        await setTimeout(() => { this.setState({ forecasts: data, loading: false }); }, 30);
+        await setTimeout(() => { this.setState({ usersLists: data, loading: false }); }, 30);
     }
 }
 
 function addRow(sd, ld) {
     let a = {
-        id: this.state.forecasts.length + 1, date1: sd, date2: ld
+        id: this.state.usersLists.length + 1, date1: sd, date2: ld
     }
-    var x = this.state.forecasts.concat(a);
+    var x = this.state.usersLists.concat(a);
 
-    this.setState({ forecasts: x, loading: false });
+    this.setState({ usersLists: x, loading: false });
 }
