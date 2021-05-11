@@ -20,10 +20,12 @@ function AddUser({ addRow }) {
 
     return (
         <form onSubmit={onSubmitHandler}>
+            <h3> Date Registration </h3>
             <DatePicker dateFormat='dd.MM.yyyy' selected={startDate} onChange={date => setStartDate(date)} />
+            <h3> Date Last Activity </h3>
             <DatePicker dateFormat='dd.MM.yyyy' selected={lastDate} onChange={date => setLastDate(date)} />
-
-            <button type='submit' >Add Row</button>
+            <h3/>
+            <button type='submit' >ADD ROW</button>
         </form>)
 }
 

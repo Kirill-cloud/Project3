@@ -22,7 +22,7 @@ export class FetchData extends Component {
         return (
             <div>
 
-                <table className='table table-striped' aria-labelledby="tabelLabel">
+                <table className='table1'>
                     <thead>
                         <tr>
                             <th>UserID</th>
@@ -46,26 +46,33 @@ export class FetchData extends Component {
 
     render() {
         let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
+            ? <p><em></em></p>
             : FetchData.renderusersListsTable(this.state.usersLists);
 
         let contents2 = !this.state.showHisto
-            ? <p><em>Loading...</em></p>
+            ? <p><em></em></p>
             : <Counter data={this.state.histo} />;
 
         return (
             <div>
+
                 <h1 id="tabelLabel" >Users</h1>
                 <h1>{this.state.retantion} </h1>
                 {contents2}
 
-                <AddUser addRow={addRow.bind(this)} />
-                <form onSubmit={this.onSubmitHandler.bind(this)}>
-                    <button type='submit' >Calculate</button>
-                </form>
-                <button onClick={this.save.bind(this)}  >Save to db</button>
-
+                <div className="bottomButtons" >
+                    <AddUser addRow={addRow.bind(this)} />
+                </div>
                 {contents}
+
+                <div className="bottomButtons" >
+                    <form onSubmit={this.onSubmitHandler.bind(this)}>
+                        <button type='submit' >CALCULATE</button>
+                    </form>
+
+                    <button onClick={this.save.bind(this)}  >SAVE</button>
+                </div>
+
             </div>
         );
     }

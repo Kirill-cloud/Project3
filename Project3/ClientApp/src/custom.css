@@ -12,3 +12,56 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+body {
+    background: #F9F9F9;
+    color:#5D6E97;
+}
+.table1 {
+    background: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 1px -1px 15px rgba(0,0,0,0.1);
+    width: 90%;
+    font-family: Ubuntu;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center;
+    
+}
+th{
+    height: 40px;
+ 
+}
+td {
+    border-top: 0.5px solid rgba(93, 110, 151, 0.4);
+    border-bottom: 0.5px solid rgba(93, 110, 151, 0.4);
+    height: 50px;
+    align-content: flex-end;
+}
+
+.bottomButtons{
+    display: inline-flex;
+    width: 90%;
+    justify-content: inherit;
+    
+}
+
+button {
+    width: 189px;
+    height: 38px;
+    background: #4A9DFF;
+    border-radius: 10px;
+    border: none;
+    font-family: Ubuntu;
+    color: #fff;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('file:///C:\Users\Kirill\Source\Repos\Project333\Project3\ClientApp\fonts\Ubuntu.ttf') format('truetype');
+}
+
+

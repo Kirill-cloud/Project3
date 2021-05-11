@@ -17,15 +17,15 @@ namespace Project3.Controllers
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            var rng = new Random();
-            var x = Enumerable.Range(1, 5).Select(index => new User
-            {
-                Id = index,
-                Date1 = String.Format("{0:dd.MM.yyyy}", DateTime.Now.AddDays(index)),
-                Date2 = String.Format("{0:dd.MM.yyyy}", DateTime.Now.AddDays(2 * index)),
-            })
-            .ToList();
-            return x.ToArray();
+            //var rng = new Random();
+            //var x = Enumerable.Range(1, 5).Select(index => new User
+            //{
+            //    Id = index,
+            //    Date1 = String.Format("{0:dd.MM.yyyy}", DateTime.Now.AddDays(index)),
+            //    Date2 = String.Format("{0:dd.MM.yyyy}", DateTime.Now.AddDays(2 * index)),
+            //})
+            //.ToList();
+            return new List<User>();
         }
         [HttpPut]
         public ActionResult Save([FromBody] User[] usersToSave)
@@ -54,8 +54,13 @@ namespace Project3.Controllers
 
             double secondParam = oldUsers.Count();
 
+            string result = "Нет старых пользователей";
+            if (secondParam!=0)
+            {
+                result = String.Format("{0:P}", firstParam / secondParam);
+            }
 
-            return new PostResponce() { UsersLifeTime = daysBetween, RR7days = String.Format("{0:P}", firstParam / secondParam) };
+            return new PostResponce() { UsersLifeTime = daysBetween, RR7days = result  };
         }
 
         public class PostResponce
