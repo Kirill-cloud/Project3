@@ -33,9 +33,9 @@ export class FetchData extends Component {
                     <tbody>
                         {usersLists.map(usersList =>
                             <tr key={usersList.id}>
-                                <td>{usersList.id}</td>
-                                <td>{usersList.date1}</td>
-                                <td>{usersList.date2}</td>
+                                <td className="tdWithBorder">{usersList.id}</td>
+                                <td className="tdWithBorder">{usersList.date1}</td>
+                                <td className="tdWithBorder">{usersList.date2}</td>
                             </tr>
                         )}
                     </tbody>
@@ -60,7 +60,7 @@ export class FetchData extends Component {
                 <h1>{this.state.retantion} </h1>
                 {contents2}
 
-                <div className="bottomButtons" >
+                <div  >
                     <AddUser addRow={addRow.bind(this)} />
                 </div>
                 {contents}

@@ -1,22 +1,23 @@
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 code {
-  color: #E01A76;
+    color: #E01A76;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 body {
     background: #F9F9F9;
-    color:#5D6E97;
+    color: #5D6E97;
 }
+
 .table1 {
     background: #FFFFFF;
     border-radius: 10px;
@@ -29,24 +30,31 @@ body {
     line-height: 16px;
     letter-spacing: 0em;
     text-align: center;
-    
+
 }
-th{
+
+table{
+    margin-top: 50px;
+}
+
+th {
     height: 40px;
- 
+    opacity: 50%;
 }
-td {
+
+.tdWithBorder {
     border-top: 0.5px solid rgba(93, 110, 151, 0.4);
     border-bottom: 0.5px solid rgba(93, 110, 151, 0.4);
     height: 50px;
     align-content: flex-end;
 }
 
-.bottomButtons{
+.bottomButtons {
+    margin-top: 75px;
+    margin-left: 30%;
     display: inline-flex;
-    width: 90%;
-    justify-content: inherit;
-    
+    width: 50%;
+    justify-content: space-evenly;
 }
 
 button {
@@ -59,9 +67,28 @@ button {
     color: #fff;
 }
 
+form {
+    position: center;
+}
+
+
+
+.elseB{
+    background: none;
+    color: #5D6E97;
+}
+
+input[type="text" i] {
+    border: none;
+    align-content: center;
+    border-radius: 20px;
+    height: 28px;
+    width: 300px;
+    padding: 20px,220px,5px,0px;
+    color: #5D6E97;
+}
+
 @font-face {
     font-family: 'Ubuntu';
     src: url('file:///C:\Users\Kirill\Source\Repos\Project333\Project3\ClientApp\fonts\Ubuntu.ttf') format('truetype');
 }
-
-
