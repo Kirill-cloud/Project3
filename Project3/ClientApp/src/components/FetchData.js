@@ -10,7 +10,7 @@ export class FetchData extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { usersLists: [], histo: [0, 1], retantion: '', loading: true, showHisto: false };
+        this.state = { usersLists: [], histo:[], retantion: '', loading: true, showHisto: false };
     }
 
     componentDidMount() {
@@ -90,18 +90,20 @@ export class FetchData extends Component {
 
     async onSubmitHandler(e) {
         e.preventDefault();
+        if (this.state.usersLists != 0) {
+            const responce = await fetch('Users',
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this.state.usersLists)
+                })
 
-        const responce = await fetch('Users',
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(this.state.usersLists)
-            })
+            const data = await responce.json();
+            await setTimeout(() => { this.setState({ histo: data.usersLifeTime, retantion: 'Rolling Retention 7 day:' + data.rR7days, showHisto: true }); }, 30);
+        }
 
-        const data = await responce.json();
-        await setTimeout(() => { this.setState({ histo: data.usersLifeTime, retantion: 'Rolling Retention 7 day:' + data.rR7days, showHisto: true }); }, 30);
 
     };
 
